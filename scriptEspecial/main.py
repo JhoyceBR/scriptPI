@@ -1,4 +1,5 @@
 rpi = int(input()) # a entrada da edição é apenas uma vez. Programar para ler a edição em um arquivo in
+ano = int(input()) # ano da publicação da revista
 listaResultado = [] # lista contendo todos os registros já filtrados
 listaRegistro = [] # lista por registro
 
@@ -9,6 +10,7 @@ while True:
         break
     else:
         listaRegistro.append(rpi) # adiciona a edição da RPI fixo de cada registro
+        listaRegistro.append(ano) # adiciona o ano da edição da RPI fixo em cada registro
 
         for i in range(7): # para a entrada dos campos de processo, titulo, titular, criador, linguagem, campo, tipo e data.
             a = input()
