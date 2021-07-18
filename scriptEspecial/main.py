@@ -1,7 +1,15 @@
-rpi = int(input()) # a entrada da edição é apenas uma vez. Programar para ler a edição em um arquivo in
-ano = int(input()) # ano da publicação da revista
-listaResultado = [] # lista contendo todos os registros já filtrados
+import sqlite3
+
+conn = sqlite3.connect('rpi_base.db')
+cursor = conn.cursor()
+
+# inseridos apenas uma vez no inicio do arquivo
+rpi = int(input())  
+ano = int(input()) 
+
+listaResultado = [] # lista geral
 listaRegistro = [] # lista por registro
+
 
 while True:
     n = input() # processo ou variável de teste
@@ -11,26 +19,57 @@ while True:
     else:
         listaRegistro.append(rpi) # adiciona a edição da RPI fixo de cada registro
         listaRegistro.append(ano) # adiciona o ano da edição da RPI fixo em cada registro
-
-        for i in range(7): # para a entrada dos campos de processo, titulo, titular, criador, linguagem, campo, tipo e data.
+        
+        # apenas para o processo
+        for k in range(len(n)): # faz a separação a partir dos dois pontos como delimitador.
+            if n[k] == ':': 
+                aux = n[k+2:]
+        listaRegistro.append(aux)
+        
+        # titulo, titular, criador, linguagem, caplicacao, tprograma, data
+        
+        for i in range(7): 
             a = input()
             aux = ""
             for k in range(len(a)):
                 if a[k] == ':': # faz a separação a partir dos dois pontos como delimitador.
                     aux = a[k+2:]
 
+            # formatar e contar nomes NÃO FUNCIONA AINDA, REVER. 
+            
+            """if (i==2):
+                contador = 0
+                lista2 = []
+                if(";" in aux):
+                    novo = aux.split('; ')
+                    for i in novo:
+                        if (i not in lista2):
+                            lista2 += i
+                    aux = "; ".join(lista2)
+                    contador = len(lista2)
+                else:
+                    contador = 1
+            """    
+
+            # formatar data para ir apenas o ano
+            if (i==6):
+                aux = int(aux[6:])
         
             listaRegistro.append(aux)
-        listaResultado.append(listaRegistro)
+
+            #listaRegistro.append(contador) # contador de criadores
+        listaResultado.append(tuple(listaRegistro)) # transforma em tupla
         listaRegistro = []
 
-    print(listaResultado) # modificar formato de saída 
+    print(listaResultado) 
 
-# todos os arquivos de entrada deve conter cada campo em uma linha correspondente. 
-# cada revista deve ser avaliada em um in e contida no out do ano
-# pode complementar retirando os nomes repetidos 
-# aprimorar fazendo a contagem geral dos campos, tipos de programa e linguagens, integrando com os outros algoritmos
-# achar uma forma de formatar a saída de forma correta para apenas passar para a planilha
-# estudar como fazer a saída ir direto para a planilha
-# estudar como formatar datas em python e ver se existe biblioteca para tal
-# até aqui, cada registro fica dentro de uma lista própria, diferenciando-se entre os outros. 
+# inserindo dados na tabela
+cursor.executemany("""
+    INSERT INTO tb_rpi(n_rpi, ano_rpi, processo, titulo, titular, criador, linguagem, campo_aplicacao, tipo_programa, data)
+    VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
+""", listaResultado)
+
+conn.commit()
+print("dados inseridos com sucesso")
+
+conn.close()

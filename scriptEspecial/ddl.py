@@ -1,0 +1,23 @@
+import sqlite3
+
+conn = sqlite3.connect('rpi_base.db')
+
+cursor = conn.cursor()
+cursor.execute("""
+    CREATE TABLE tb_rpi(
+        id_registro INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+        n_rpi INTEGER NOT NULL,
+        ano_rpi INTEGER NOT NULL,
+        processo TEXT,
+        titulo TEXT,
+        titular TEXT,
+        criador TEXT,
+        linguagem TEXT,
+        campo_aplicacao TEXT,
+        tipo_programa TEXT,
+        data INTEGER
+    );
+""")
+print('tabela tb_rpi criada com sucesso')
+
+conn.close()
