@@ -33,23 +33,7 @@ while True:
             aux = ""
             for k in range(len(a)):
                 if a[k] == ':': # faz a separação a partir dos dois pontos como delimitador.
-                    aux = a[k+2:]
-
-            # formatar e contar nomes NÃO FUNCIONA AINDA, REVER. 
-            
-            """if (i==2):
-                contador = 0
-                lista2 = []
-                if(";" in aux):
-                    novo = aux.split('; ')
-                    for i in novo:
-                        if (i not in lista2):
-                            lista2 += i
-                    aux = "; ".join(lista2)
-                    contador = len(lista2)
-                else:
-                    contador = 1
-            """    
+                    aux = a[k+2:] 
 
             # formatar data para ir apenas o ano
             if (i==6):
@@ -57,7 +41,24 @@ while True:
         
             listaRegistro.append(aux)
 
-            #listaRegistro.append(contador) # contador de criadores
+        # contador de nomes e corretor de repetição
+        listafrequencia = []
+        nomes = listaRegistro[5]
+
+        if (';' not in nomes):
+            contador = 1
+        else:
+            nomes = nomes.split('; ')
+            for N in nomes:
+                if (N not in listafrequencia):
+                    listafrequencia.append(N)
+                else:
+                    pass
+            contador = len(listafrequencia)
+            listaRegistro[5] = "; ".join(listafrequencia) # substitui na lista caso haja repetição
+        
+        listaRegistro.append(contador)
+
         listaResultado.append(tuple(listaRegistro)) # transforma em tupla
         listaRegistro = []
 
@@ -65,8 +66,8 @@ while True:
 
 # inserindo dados na tabela
 cursor.executemany("""
-    INSERT INTO tb_rpi(n_rpi, ano_rpi, processo, titulo, titular, criador, linguagem, campo_aplicacao, tipo_programa, data)
-    VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
+    INSERT INTO tb_rpi(n_rpi, ano_rpi, processo, titulo, titular, criador, linguagem, campo_aplicacao, tipo_programa, data, qtd_criadores)
+    VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
 """, listaResultado)
 
 conn.commit()

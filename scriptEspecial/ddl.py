@@ -15,7 +15,8 @@ cursor.execute("""
         linguagem TEXT,
         campo_aplicacao TEXT,
         tipo_programa TEXT,
-        data INTEGER
+        data INTEGER,
+        qtd_criadores INTEGER
     );
 """)
 print('tabela tb_rpi criada com sucesso')
