@@ -7,7 +7,7 @@ cursor.execute("""
     CREATE TABLE tb_rpi(
         id_registro INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
         n_rpi INTEGER NOT NULL,
-        ano_rpi INTEGER NOT NULL,
+        ano_rpi TEXT,
         processo TEXT,
         titulo TEXT,
         titular TEXT,

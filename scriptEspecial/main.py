@@ -37,10 +37,16 @@ while True:
 
             # formatar data para ir apenas o ano
             if (i==6):
-                aux = int(aux[6:])
-        
+                try:
+                    avaliar = aux[6:]
+                    avaliar = int(avaliar)
+                    aux = aux[6:]
+                except:
+                    aux = "Não informado"
+
             listaRegistro.append(aux)
 
+            
         # contador de nomes e corretor de repetição
         listafrequencia = []
         nomes = listaRegistro[5]
