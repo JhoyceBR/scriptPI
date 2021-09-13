@@ -1,6 +1,6 @@
 import sqlite3
 
-conn = sqlite3.connect('rpi_base.db')
+conn = sqlite3.connect('rpi.db')
 
 cursor = conn.cursor()
 cursor.execute("""
