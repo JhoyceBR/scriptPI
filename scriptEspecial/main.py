@@ -65,20 +65,6 @@ while True:
         
         listaRegistro.append(contador)
 
-
-        """ inserção do genero
-        genero = listaRegistro[8]
-        if (genero == '1'):
-            listaRegistro[8] = "NÃO. Não há criadores do sexo feminino"
-        elif (genero == '2'):
-            listaRegistro[8] = "SIM, PARCIALMENTE. Existe pelo menos uma mulher incluída no grupo de criadores"
-        elif (genero == '3'):
-            listaRegistro[8] = "SIM, EXCLUSIVAMENTE. Todos os participantes são do sexo feminino"
-        elif (genero == '4'):
-            listaRegistro[8] = "SEM RESPOSTA. Não foi possívl identificar o gênero de algum dos criadores"
-        elif (genero == '5'):
-            listaRegistro[8] = "SEM RESPOSTA. O criador refere-se a uma pessoa jurídica"
-"""
         listaResultado.append(tuple(listaRegistro)) # transforma em tupla
         listaRegistro = []
 
